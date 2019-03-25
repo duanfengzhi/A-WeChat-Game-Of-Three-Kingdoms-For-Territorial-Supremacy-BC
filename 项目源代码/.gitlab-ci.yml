@@ -1,0 +1,44 @@
+image: node:latest
+
+stages:
+  - init
+  - style-lint
+  - unit-testing
+  - building
+  - deploy
+
+cache:
+  paths:
+   - node_modules/
+   
+init-job:
+  stage:
+   init
+  script:
+   - npm install cnpm --registry=https://registry.npm.taobao.org -g
+   - cnpm install eslint mocha chai --save-dev
+
+style-lint-job:
+  stage: 
+   style-lint
+  script:
+   - ./node_modules/.bin/eslint ./wxMainProject/assets/scripts/**/*.js
+   - ./node_modules/.bin/eslint ./wxOpenProject/assets/**/*.js
+   
+unit-testing-job:
+  stage:
+   unit-testing
+  script:
+   - ./node_modules/.bin/mocha ./unit-test/*.test.js
+
+building-job:
+  stage:
+   building
+  script:
+   - pwd
+   
+deploy-job:
+  stage:
+   deploy
+  script:
+   - pwd
